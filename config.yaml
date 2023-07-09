@@ -1,0 +1,17 @@
+---
+Mode: Simulation
+Force function: Gravity
+Method: Eiler
+
+End time: 1e+1
+Time step: 5e-5
+Time direction: +1
+Pulse table: false
+
+Progons per delta: 0
+Delta start: 0
+Delta end: 0
+Delta step: 0
+
+Field net step (Resolution): 0.01
+Devider: 2
