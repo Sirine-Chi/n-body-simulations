@@ -53,7 +53,7 @@ public:
         angle = anglep;
     };
 
-    vector<VectorXd> get_positions() const {
+    const vector<VectorXd> &get_positions() const {
         return positions;
     };
 private:
