@@ -11,6 +11,7 @@
 #include <cmath>
 #include <ctime>
 #include "build/Eigen/Dense"
+#include "build/Eigen/Geometry"
 
 #ifdef __APPLE__
 #include <OpenCL/opencl.h>
@@ -26,12 +27,29 @@ using Eigen::VectorXd;
 
 const float G = 0.0001184069; // In units Earth mass, AU, A Year
 
+double radians(double& degrees) {
+    return degrees * (M_PI / 180);
+}
+
+double degrees(double& radians) {
+    return radians / (M_PI / 180);
+}
+
+
 // Function, gravity force acting on I, ri, rj, mi, mj
 VectorXd f_i(VectorXd& ri, VectorXd& rj, float& mi, float& mj) {
     return (rj-ri)*G*mi*mj*pow((rj-ri).norm(), -3.0/2);
 };
 
 class Particle {
+private:
+    string name;
+    float mass;
+    vector<VectorXd> positions;
+    vector<VectorXd> velocities;
+    vector<VectorXd> accelerations;
+    string color;
+    float angle;
 public:
     // Constructor with arguments
     // Name, sPosition, sVelocity, mass,
@@ -56,13 +74,11 @@ public:
     const vector<VectorXd> &get_positions() const {
         return positions;
     };
-private:
-    string name;
-    float mass;
-    vector<VectorXd> positions;
-    vector<VectorXd> velocities;
-    string color;
-    float angle;
+
+    VectorXd rotatate(VectorXd& r, float& angle_deg) {
+        MatrixXd rot_mx {{cos(angle_deg), sin(angle_deg)}, {-sin(angle_deg), cos(angle_deg)}};
+        return rot_mx*r;
+    };
 
     // Function: gravity force acting on I, at iteration S
     // Inputs: particle1, particle2, S
