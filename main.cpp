@@ -39,11 +39,28 @@ float random_f(const float& mean) {
 
 }
 
+template <typename T>
+T vector_sum(const vector<T>& vec_to_sum)  {
+    T sum;
+    sum *= 0;
+    for (auto & element : vec_to_sum) {
+        sum += element;
+    };
+    return sum;
+};
+
+auto eiler = [] (auto &x, auto &y, const float &step) {
+    return x+(step*y);
+};
+
 
 // Function, gravity force acting on I, ri, rj, mi, mj
 VectorXd f_i(const VectorXd& ri, const VectorXd& rj, const float& mi, const float& mj) {
     return (rj-ri)*G*mi*mj*pow((rj-ri).norm(), -3.0/2);
 }
+
+
+
 
 class Particle {
 private:
@@ -54,57 +71,89 @@ private:
     vector<VectorXd> accelerations;
     string color;
     float angle;
+
+    vector<float> times;
 public:
     // Constructor with arguments
     // Name, sPosition, sVelocity, mass,
-    Particle( string namep, float massp, VectorXd positionp, VectorXd velocityp, string colorp, float anglep) {
+    Particle(const string &namep, const float &massp, const VectorXd &positionp, const VectorXd &velocityp, const string &colorp, const float &anglep) {
         name = namep;
         mass = massp;
-        positions.insert(positions.begin(), positionp);
-        velocities.insert(velocities.begin(), velocityp);
+        positions.push_back(positionp);
+        velocities.push_back(velocityp);
         color = colorp;
         angle = anglep;
+
+        times.push_back(0.0);
         cout << "Particle initialized ---";
     };
 
     void set_acceleration(const VectorXd& accel) {
-        accelerations.insert(accelerations.begin(), accel);
+        accelerations.push_back(accel);
     };
 
-    void set_values(const string& namep, const float& massp, const VectorXd& positionp, const VectorXd& velocityp, const string& colorp, const float& anglep) {
-        name = namep;
-        mass = massp;
-        positions.insert(positions.begin(), positionp);
-        velocities.insert(velocities.begin(), velocityp);
-        color = colorp;
-        angle = anglep;
+    void offset(const VectorXd offset_vector) {
+        for (auto & pose : positions) {
+            pose = pose - offset_vector;
+        };
     };
 
-    void iteration(double& step, vector<Particle>& particles) {
+    VectorXd f_I_p(const vector<Particle> &particles) {
         VectorXd force {{0, 0}};
-        vector<VectorXd> forces;
-        for (auto & element : particles) {
+        for (auto & other : particles) {
             // force from element added to old force. But multiplied to binary expression for equality.
-            force = force + f_i(this->get_positions().back(), element.get_positions().back(), this->get_mass(), element.get_mass() )*(element.positions.front() != this->positions.front());
+            if (other.positions.front() != positions.front()) {
+                force += f_i(positions.back(), other.get_positions().back(), mass, other.get_mass() );
+            }
         }
-        accelerations.insert(accelerations.begin(), force/mass);
+        return force;
+    };
+
+    void iteration(const double &step, const vector<Particle> &particles) {
+        accelerations.push_back(f_I_p(particles)/mass);
+        VectorXd v, r;
+        velocities.push_back( eiler(velocities.back(), accelerations.back(), step) );
+        positions.push_back( eiler(positions.back(), accelerations.back(), step) );
+        times.push_back(times.back() + step);
+    };
+
+    void print_log() {
+        cout << "\n - General " << name << " : " << mass << ", " << color << ", " << angle;
+        cout << "\n - Positions\n";
+        for (auto & i : positions) {
+            cout << i << " ";
+        };
+//        cout << "\n - Velocities\n";
+//        for (auto & i : velocities) {
+//            cout << i << " ";
+//        };
+        cout << "\n - Accelerations\n";
+        for (auto & i : accelerations) {
+            cout << i << " ";
+        };
     };
 
     const vector<VectorXd> &get_positions() const { return positions; };
 
+    const VectorXd &get_last_position() const { return positions.back(); };
+
     const float &get_mass() const { return mass; };
 
-    VectorXd const rotate(const VectorXd& r, const float& angle_deg) {
+    VectorXd const rotate(const VectorXd &r, const float &angle_deg) {
         MatrixXd rot_mx {{cos(angle_deg), sin(angle_deg)}, {-sin(angle_deg), cos(angle_deg)}};
         return rot_mx*r;
     };
 
     // Function: gravity force acting on I, at iteration S
     // Inputs: particle1, particle2, S
-    VectorXd f_i_s_p(const Particle& p1, const Particle& p2) {
+    VectorXd f_ij_s_p(const Particle &p1, const Particle &p2) {
         return f_i(p1.positions.back(), p2.positions.back(), p1.mass, p2.mass);
     };
 };
+
+
+
+
 
 class Simulator {
     // subclasses: different iteration method
@@ -116,38 +165,79 @@ class Simulator {
     // def get_positions
     // def get_velocities
 private:
+    clock_t begin_time;
     vector<Particle> particles;
     float end_time;
     double step;
 public:
-    // Засовываем в партиклес Симулятора все партиклы, их вообще нужно ещё вытащить из файла, и передать
-    void set_objects(vector<Particle> prtls) {
-        for (auto & element : prtls) {particles.insert(particles.begin(), element); }
+    // Constructor custom
+    Simulator(const vector<Particle>& particlesp, const float& end_timep, const double& stepp) {
+        const clock_t begin_time = clock();
+        particles = particlesp;
+        end_time = end_timep;
+        step = stepp;
     };
 
-    vector <vector <VectorXd> > get_positions() {
-        vector <vector <VectorXd> > poses;
-        for (auto & element : particles) {poses.insert(poses.begin(), element.get_positions()); }
-        return poses;
+    // Засовываем в партиклес Симулятора все партиклы, их вообще нужно ещё вытащить из файла, и передать
+    void set_objects(vector<Particle> prtls) {
+        for (auto & element : prtls) {particles.push_back(element); }
     };
 
     void simulation() {
-        for (float tau = 0; tau < end_time; tau = tau+step) {
+        for (float tau = 0; tau < end_time; tau += step) {
             for (auto & element : particles) {element.iteration(step, particles); }
         }
     };
+
+    // --- Getters
+
+    vector <vector <VectorXd> > get_positions() {
+        vector <vector <VectorXd> > poses;
+        for (auto & element : particles) {poses.push_back(element.get_positions()); }
+        return poses;
+    };
+
+    float get_time() { return float( clock() - begin_time ) / CLOCKS_PER_SEC; };
 };
 
 int main() {
     const clock_t begin_time = clock();
 
-    int N = 10;
+    float end_time = 10;
+    float step = 0.00005;
+
+    int N = 2;
+    vector <Particle> particle_system;
 
     // === Generating objects (just mean)
     for (int i = 0; i < N; i++) {
         Particle p( to_string(i), random_f(4.0), VectorXd {{random_f(2.0), 0.0}}, VectorXd {{0.0, random_f(20.0)}}, "w", random_f(M_PI/2) );
+        particle_system.push_back(p);
         cout << i << "\n";
     }
+
+    // Calculating zero forces
+    for (auto & p : particle_system) {
+        p.set_acceleration(p.f_I_p(particle_system));
+    }
+
+    //Iterating
+    for (float t = 0; t < end_time; t += step) {
+        for (auto & p : particle_system) {
+            // p.print_log();
+            p.iteration(step, particle_system);
+        };
+    };
+
+    for (auto & p : particle_system) { cout << p.get_last_position(); }
+
+//    for (auto & p : particle_system) {
+//        for (auto & i : p.get_positions()) {
+//            cout << i;
+//        };
+//    };
+
+
 
     // print runtime
     cout << "\n --- Runtime: " << float( clock() - begin_time ) /  CLOCKS_PER_SEC << " sec" << endl;
