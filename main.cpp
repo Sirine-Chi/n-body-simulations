@@ -88,14 +88,18 @@ public:
         cout << "Particle initialized ---";
     };
 
-    void set_acceleration(const VectorXd& accel) {
-        accelerations.push_back(accel);
+    void set_acceleration(const VectorXd& accel) { accelerations.push_back(accel); };
+    void set_last_position(const VectorXd& pos) {
+        cout << "s\n" << positions.back() << "\ns";
+        positions.pop_back();
+        cout << "p\n" << positions.back() << "\np";
+        positions.push_back(pos);
     };
 
-    void offset(const VectorXd offset_vector) {
-        for (auto & pose : positions) {
-            pose = pose - offset_vector;
-        };
+    void offset(const VectorXd& offset_vector) {
+        // cout << "\nOff pos back: " << positions.back() << "\n";
+        // positions.back() = positions.back() - offset_vector;
+        set_last_position(positions.back() - offset_vector);
     };
 
     VectorXd f_I_p(const vector<Particle> &particles) {
@@ -111,7 +115,6 @@ public:
 
     void iteration(const double &step, const vector<Particle> &particles) {
         accelerations.push_back(f_I_p(particles)/mass);
-        VectorXd v, r;
         velocities.push_back( eiler(velocities.back(), accelerations.back(), step) );
         positions.push_back( eiler(positions.back(), accelerations.back(), step) );
         times.push_back(times.back() + step);
@@ -133,6 +136,8 @@ public:
         };
     };
 
+    const string &get_name() const {return name; }
+
     const vector<VectorXd> &get_positions() const { return positions; };
 
     const VectorXd &get_last_position() const { return positions.back(); };
@@ -140,8 +145,13 @@ public:
     const float &get_mass() const { return mass; };
 
     VectorXd const rotate(const VectorXd &r, const float &angle_deg) {
-        MatrixXd rot_mx {{cos(angle_deg), sin(angle_deg)}, {-sin(angle_deg), cos(angle_deg)}};
+        double angle_rad = radians(angle_deg);
+        MatrixXd rot_mx {{cos(angle_rad), sin(angle_rad)}, {-sin(angle_rad), cos(angle_rad)}};
         return rot_mx*r;
+    };
+
+    void rotate_self() {
+        positions.front() = rotate(positions.front(), angle);
     };
 
     // Function: gravity force acting on I, at iteration S
@@ -200,6 +210,9 @@ public:
     float get_time() { return float( clock() - begin_time ) / CLOCKS_PER_SEC; };
 };
 
+
+
+
 int main() {
     const clock_t begin_time = clock();
 
@@ -210,11 +223,19 @@ int main() {
     vector <Particle> particle_system;
 
     // === Generating objects (just mean)
-    for (int i = 0; i < N; i++) {
-        Particle p( to_string(i), random_f(4.0), VectorXd {{random_f(2.0), 0.0}}, VectorXd {{0.0, random_f(20.0)}}, "w", random_f(M_PI/2) );
-        particle_system.push_back(p);
-        cout << i << "\n";
-    }
+//    for (int i = 0; i < N; i++) {
+//        Particle p( to_string(i), random_f(4.0), VectorXd {{random_f(2.0), 0.0}}, VectorXd {{0.0, random_f(20.0)}}, "w", random_f(M_PI/2) );
+//        particle_system.push_back(p);
+//        cout << i << "\n";
+//    }
+
+    Particle sun("Sun",332840.0,VectorXd {{0,0}}, VectorXd {{0,0}}, "y" ,0);
+    Particle p2("Mercury", 0.0553,VectorXd {{0.4667045037,0}}, VectorXd {{0,8.19188772}}, "maroon", 192.12);
+    particle_system.push_back(sun);
+    particle_system.push_back(p2);
+
+    // Rotate on start position
+    for (auto & p : particle_system) { p.rotate_self(); }
 
     // Calculating zero forces
     for (auto & p : particle_system) {
@@ -224,12 +245,18 @@ int main() {
     //Iterating
     for (float t = 0; t < end_time; t += step) {
         for (auto & p : particle_system) {
-            // p.print_log();
+            //p.print_log();
+            // cout << "\n" << p.get_name() << ":\n" << p.get_last_position() << ", ";
             p.iteration(step, particle_system);
         };
-    };
+    }
 
-    for (auto & p : particle_system) { cout << p.get_last_position(); }
+    //Printing final positions
+    // VectorXd off = sun.get_last_position();
+    cout << "\noff:\n" << sun.get_last_position() << "\n";
+    for (auto & p : particle_system) {
+        cout << "\n" << p.get_name() << "\n" << p.get_last_position()  << "\n"; // - particle_system.at(0).get_last_position()
+    }
 
 //    for (auto & p : particle_system) {
 //        for (auto & i : p.get_positions()) {
@@ -249,7 +276,8 @@ int earth_example() {
     VectorXd v {{0.0, 6.1754482536}};
     Particle earth("Earth", 1.0, r, v, "aqua", 224.0); // Consrtucting object of class
     for (auto & element : earth.get_positions()) { cout << element << "-- el \n"; } // Printing positions
-}
+    return 0;
+};
 
 int in_out() {
 
