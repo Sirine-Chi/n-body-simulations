@@ -14,6 +14,12 @@
 # EXTERNAL cache entries
 ########################
 
+//The directory containing a CMake configuration file for Boost.
+Boost_DIR:PATH=Boost_DIR-NOTFOUND
+
+//Path to a file.
+Boost_INCLUDE_DIR:PATH=Boost_INCLUDE_DIR-NOTFOUND
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=CMAKE_ADDR2LINE-NOTFOUND
 
@@ -213,6 +219,57 @@ CMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/Users/ilyabelov/.clion-vcpkg/vcpkg/scripts/b
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Pick a version of Qt to use: 3 or 4
+DESIRED_QT_VERSION:STRING=3
+
+//The directory containing a CMake configuration file for GLEW.
+GLEW_DIR:PATH=/opt/homebrew/lib/cmake/glew
+
+//Path to a library.
+GLEW_LIBRARY_DEBUG:FILEPATH=GLEW_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+GLEW_LIBRARY_RELEASE:FILEPATH=GLEW_LIBRARY_RELEASE-NOTFOUND
+
+//Path to a library.
+GLFW:FILEPATH=GLFW-NOTFOUND
+
+//The directory containing a CMake configuration file for GLFW.
+GLFW_DIR:PATH=GLFW_DIR-NOTFOUND
+
+//Include for OpenGL on OS X
+OPENGL_INCLUDE_DIR:PATH=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/System/Library/Frameworks/OpenGL.framework
+
+//OpenGL library for OS X
+OPENGL_gl_LIBRARY:FILEPATH=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/System/Library/Frameworks/OpenGL.framework
+
+//GLU library for OS X (usually same as OpenGL library)
+OPENGL_glu_LIBRARY:FILEPATH=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/System/Library/Frameworks/OpenGL.framework
+
+//Path to a file.
+QT3_QGLOBAL_H_FILE:FILEPATH=/Users/ilyabelov/.clion-vcpkg/vcpkg/installed/arm64-osx/include
+
+//Path to a file.
+QT4_QGLOBAL_H_FILE:FILEPATH=QT4_QGLOBAL_H_FILE-NOTFOUND
+
+//path to Qt3 include directory
+QT_INCLUDE_DIR:PATH=QT_INCLUDE_DIR-NOTFOUND
+
+//Path to a program.
+QT_MOC_EXECUTABLE:FILEPATH=QT_MOC_EXECUTABLE-NOTFOUND
+
+//Path to a library.
+QT_QASSISTANTCLIENT_LIBRARY:FILEPATH=QT_QASSISTANTCLIENT_LIBRARY-NOTFOUND
+
+//Path to a program.
+QT_QMAKE_EXECUTABLE_FINDQT:FILEPATH=QT_QMAKE_EXECUTABLE_FINDQT-NOTFOUND
+
+//Path to a library.
+QT_QT_LIBRARY:FILEPATH=QT_QT_LIBRARY-NOTFOUND
+
+//Path to a program.
+QT_UIC_EXECUTABLE:FILEPATH=QT_UIC_EXECUTABLE-NOTFOUND
+
 //Automatically copy dependencies into the output directory for
 // executables.
 VCPKG_APPLOCAL_DEPS:BOOL=ON
@@ -259,6 +316,12 @@ Z_VCPKG_CL:FILEPATH=Z_VCPKG_CL-NOTFOUND
 // triplet
 _VCPKG_INSTALLED_DIR:PATH=/Users/ilyabelov/.clion-vcpkg/vcpkg/installed
 
+//The directory containing a CMake configuration file for glfw.
+glfw_DIR:PATH=glfw_DIR-NOTFOUND
+
+//The directory containing a CMake configuration file for glm.
+glm_DIR:PATH=glm_DIR-NOTFOUND
+
 //Value Computed by CMake
 n_body_simulations_BINARY_DIR:STATIC=/Users/ilyabelov/CLionProjects/n-body-simulations/cmake-build-debug
 
@@ -273,6 +336,10 @@ n_body_simulations_SOURCE_DIR:STATIC=/Users/ilyabelov/CLionProjects/n-body-simul
 # INTERNAL cache entries
 ########################
 
+//ADVANCED property for variable: Boost_DIR
+Boost_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_INCLUDE_DIR
+Boost_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_ADDR2LINE
 CMAKE_ADDR2LINE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_AR
@@ -408,6 +475,36 @@ CMAKE_TOOLCHAIN_FILE-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding GLEW
+FIND_PACKAGE_MESSAGE_DETAILS_GLEW:INTERNAL=[/opt/homebrew/lib/cmake/glew/glew-config.cmake][v()]
+//Details about finding OpenGL
+FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/System/Library/Frameworks/OpenGL.framework][/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/System/Library/Frameworks/OpenGL.framework][c ][v()]
+//ADVANCED property for variable: GLEW_LIBRARY_DEBUG
+GLEW_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GLEW_LIBRARY_RELEASE
+GLEW_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_INCLUDE_DIR
+OPENGL_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_gl_LIBRARY
+OPENGL_gl_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_glu_LIBRARY
+OPENGL_glu_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: QT3_QGLOBAL_H_FILE
+QT3_QGLOBAL_H_FILE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: QT4_QGLOBAL_H_FILE
+QT4_QGLOBAL_H_FILE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: QT_INCLUDE_DIR
+QT_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: QT_MOC_EXECUTABLE
+QT_MOC_EXECUTABLE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: QT_QASSISTANTCLIENT_LIBRARY
+QT_QASSISTANTCLIENT_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: QT_QMAKE_EXECUTABLE_FINDQT
+QT_QMAKE_EXECUTABLE_FINDQT-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: QT_QT_LIBRARY
+QT_QT_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: QT_UIC_EXECUTABLE
+QT_UIC_EXECUTABLE-ADVANCED:INTERNAL=1
 //Install the dependencies listed in your manifest:
 //\n    If this is off, you will have to manually install your dependencies.
 //\n    See https://github.com/microsoft/vcpkg/tree/master/docs/specifications/manifests.md
@@ -420,4 +517,12 @@ VCPKG_VERBOSE-ADVANCED:INTERNAL=1
 Z_VCPKG_CHECK_MANIFEST_MODE:INTERNAL=OFF
 //Vcpkg root directory
 Z_VCPKG_ROOT_DIR:INTERNAL=/Users/ilyabelov/.clion-vcpkg/vcpkg
+//Components requested for this build tree.
+_Boost_COMPONENTS_SEARCHED:INTERNAL=
+//Last used Boost_INCLUDE_DIR value.
+_Boost_INCLUDE_DIR_LAST:INTERNAL=Boost_INCLUDE_DIR-NOTFOUND
+//Last used Boost_NAMESPACE value.
+_Boost_NAMESPACE_LAST:INTERNAL=boost
+//Last used Boost_USE_MULTITHREADED value.
+_Boost_USE_MULTITHREADED_LAST:INTERNAL=TRUE
 
