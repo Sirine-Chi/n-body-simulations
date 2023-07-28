@@ -1,52 +1,21 @@
 "/Users/ilyabelov/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/231.9225.21/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=/Users/ilyabelov/.clion-vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake -S /Users/ilyabelov/CLionProjects/n-body-simulations -B /Users/ilyabelov/CLionProjects/n-body-simulations/cmake-build-debug
-CMake Warning (dev) at /Users/ilyabelov/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/231.9225.21/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/FindPackageHandleStandardArgs.cmake:438 (message):
-  The package name passed to `find_package_handle_standard_args` (Boost) does
-  not match the name of the calling package (boost).  This can lead to
-  problems in calling code that expects `find_package` result variables
-  (e.g., `_FOUND`) to follow a certain pattern.
+-- Downloading conan.cmake from https://github.com/conan-io/cmake-conan
+-- Conan: Automatic detection of conan settings from cmake
+-- Conan: Settings= -s;build_type=Debug;-s;compiler=apple-clang;-s;compiler.version=14.0;-s;compiler.libcxx=libc++
+-- Conan: checking conan executable
+-- Conan: Found program /opt/homebrew/bin/conan
+-- Conan: Version found Conan version 2.0.9
+-- Conan executing: /opt/homebrew/bin/conan install . -s build_type=Debug -s compiler=apple-clang -s compiler.version=14.0 -s compiler.libcxx=libc++ -g=cmake
+ERROR: The default build profile '/Users/ilyabelov/.conan2/profiles/default' doesn't exist.
+You need to create a default profile (type 'conan profile detect' command)
+or specify your own profile with '--profile:build=<myprofile>'
+CMake Error at cmake-build-debug/conan.cmake:540 (message):
+  Conan install failed='1'
 Call Stack (most recent call first):
-  /Users/ilyabelov/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/231.9225.21/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Findboost.cmake:2377 (find_package_handle_standard_args)
-  /Users/ilyabelov/.clion-vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake:855 (_find_package)
-  CMakeLists.txt:14 (find_package)
-This warning is for project developers.  Use -Wno-dev to suppress it.
+  cmake-build-debug/conan.cmake:882 (old_conan_cmake_install)
+  CMakeLists.txt:21 (conan_cmake_run)
 
--- Could NOT find Boost (missing: Boost_INCLUDE_DIR) 
-CMake Warning (dev) at /Users/ilyabelov/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/231.9225.21/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/FindPackageHandleStandardArgs.cmake:438 (message):
-  The package name passed to `find_package_handle_standard_args` (OpenGL)
-  does not match the name of the calling package (opengl).  This can lead to
-  problems in calling code that expects `find_package` result variables
-  (e.g., `_FOUND`) to follow a certain pattern.
-Call Stack (most recent call first):
-  /Users/ilyabelov/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/231.9225.21/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Findopengl.cmake:443 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)
-  /Users/ilyabelov/.clion-vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake:855 (_find_package)
-  CMakeLists.txt:26 (find_package)
-This warning is for project developers.  Use -Wno-dev to suppress it.
 
-CMake Warning (dev) at /Users/ilyabelov/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/231.9225.21/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/FindPackageHandleStandardArgs.cmake:438 (message):
-  The package name passed to `find_package_handle_standard_args` (Qt3) does
-  not match the name of the calling package (qt).  This can lead to problems
-  in calling code that expects `find_package` result variables (e.g.,
-  `_FOUND`) to follow a certain pattern.
-Call Stack (most recent call first):
-  /Users/ilyabelov/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/231.9225.21/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/FindQt3.cmake:213 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)
-  /Users/ilyabelov/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/231.9225.21/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Findqt.cmake:160 (include)
-  /Users/ilyabelov/.clion-vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake:855 (_find_package)
-  CMakeLists.txt:32 (find_package)
-This warning is for project developers.  Use -Wno-dev to suppress it.
-
--- Could NOT find Qt3 (missing: QT_QT_LIBRARY QT_INCLUDE_DIR QT_MOC_EXECUTABLE) 
-CMake was unable to find desired Qt version: 3. Set advanced values QT_QMAKE_EXECUTABLE and QT3_QGLOBAL_H_FILE.
-CMake Warning (dev) at /Users/ilyabelov/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/231.9225.21/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/FindPackageHandleStandardArgs.cmake:438 (message):
-  The package name passed to `find_package_handle_standard_args` (GLEW) does
-  not match the name of the calling package (glew).  This can lead to
-  problems in calling code that expects `find_package` result variables
-  (e.g., `_FOUND`) to follow a certain pattern.
-Call Stack (most recent call first):
-  /Users/ilyabelov/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/231.9225.21/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/Findglew.cmake:71 (find_package_handle_standard_args)
-  /Users/ilyabelov/.clion-vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake:855 (_find_package)
-  CMakeLists.txt:38 (find_package)
-This warning is for project developers.  Use -Wno-dev to suppress it.
-
--- Configuring done
--- Generating done
--- Build files have been written to: /Users/ilyabelov/CLionProjects/n-body-simulations/cmake-build-debug
+-- Configuring incomplete, errors occurred!
+See also "/Users/ilyabelov/CLionProjects/n-body-simulations/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+See also "/Users/ilyabelov/CLionProjects/n-body-simulations/cmake-build-debug/CMakeFiles/CMakeError.log".
