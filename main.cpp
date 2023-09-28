@@ -7,8 +7,8 @@
 int main() {
     const clock_t begin_time = clock();
 
-    float end_time = 10;
-    float step = 0.00005;
+    float end_time = 1e+1;
+    float step = 5e-5;
 
     int N = 2;
     vector <Particle> particle_system;
@@ -26,7 +26,7 @@ int main() {
         p.set_acceleration(p.f_I_p(particle_system));
     }
 
-    //Iterating
+    // Iterating
     for (float t = 0; t < end_time; t += step) {
         for (auto & p : particle_system) {
             //p.print_log();
@@ -35,11 +35,11 @@ int main() {
         };
     }
 
-    //Printing final positions
-    // VectorXd off = sun.get_last_position();
-    cout << "\noff:\n" << sun.get_last_position() << "\n";
+    // Printing final positions
+    VectorXd off = particle_system[0].get_last_position();
+    cout << "\noff:\n" << particle_system[0].get_last_position() << "\n";
     for (auto & p : particle_system) {
-        cout << "\n" << p.get_name() << "\n" << p.get_last_position()  << "\n"; // - particle_system.at(0).get_last_position()
+        cout << "\n" << p.get_name() << "\n" << (p.get_last_position() - off)  << "\n"; // - particle_system.at(0).get_last_position()
     }
 
 //    for (auto & p : particle_system) {
