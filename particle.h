@@ -23,7 +23,7 @@ private:
     vector<float> times;
 public:
     // Constructor with arguments
-    // Name, sPosition, sVelocity, mass,
+    // Name, sPosition, sVelocity, mass, color, angle.
     Particle(const string &namep, const float &massp, const VectorXd &positionp, const VectorXd &velocityp, const string &colorp, const float &anglep) {
         name = namep;
         mass = massp;
